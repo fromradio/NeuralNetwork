@@ -2,7 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-
+from Rosenblatt import *
 
 # generate a set of data that can be separated by a hyper plane
 def linear_data_generate(m,n):
@@ -26,18 +26,44 @@ def linear_data_generate(m,n):
 			pass
 	return {"plane":hyper_plane, "bias":bias, "data":training_data}
 
+def line_function(x,y,w,b):
+	# w is the weight vector
+	# b is the bias
+	return w[0]*x+w[1]*y+b
+	# pass 
 if __name__ == '__main__':
-	t = linear_data_generate(2,100)
+	t = linear_data_generate(2,1000)
 	# paint
 	#print t
 	plane = t["plane"]
 	data = t["data"]
+	bias = t["bias"]
 	#print data
 	label_first = data[:,2]==1
 	label_second = data[:,2]==-1
 	data_first = data[label_first,0:2]
-	print data_first
+	#print data_first
 	data_second = data[label_second,0:2]
 	plt.plot(data_first[:,0],data_first[:,1],'ro')
 	plt.plot(data_second[:,0],data_second[:,1],'bo')
+	#print data[:,0].max(),data[:,0].min()
+	xmin = data[:,0].min()
+	xmax = data[:,0].max()
+	ymin = data[:,1].min()
+	ymax = data[:,1].max()
+
+	#xmin,xmax = (-1.5,1.5)
+	XT = np.linspace(xmin,xmax,100)
+	YT = np.linspace(ymin,ymax,100)
+	X,Y = np.meshgrid(XT,YT)
+	Z = line_function(X,Y,plane,bias)
+
+	t = Rosenblatt_sensor(2,0.5)
+	# print data.shape
+	t.learning_process(data)
+	print t.weight(),t.bias()
+	print plane,bias
+	plt.contour(X,Y,Z,[0])
+	ZZ = line_function(X,Y,t.weight(),t.bias())
+	plt.contour(X,Y,ZZ,[0],color='r')
 	plt.show()

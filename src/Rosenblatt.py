@@ -31,7 +31,20 @@ class Rosenblatt_sensor:
 			pass
 		#print self.__w,self.__b
 
-	def test(self):
+	def learning_process(self,data):
+		# specified data 
+		#print "shape",data.shape
+		m,n = data.shape # the shape
+		for i in range(0,m):
+			# iteration
+			#print data[i,0:n-1]
+			self.learning(data[i,0:n-1],data[i,n-1])
+	def weight(self):
+		# getter
+		return self.__w
+	def bias(self):
+		return self.__b
+	def test(self): 
 		print 'test'
 
 
