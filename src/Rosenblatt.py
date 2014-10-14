@@ -18,7 +18,8 @@ class Rosenblatt_sensor:
 		self.__w = np.zeros(n) # the weight vector of the whole machine
 		self.__b = 0. # the bias
 		self.__yita = yita # the ratio
-		print 'hello', self.__w
+		#print 'hello', self.__w
+
 	def learning(self,x,d):
 		# update of the machine
 		y = np.sign(np.dot(x,self.__w)+self.__b)
@@ -28,8 +29,8 @@ class Rosenblatt_sensor:
 			self.__b = self.__b + self.__yita*(d-y)
 		else:
 			pass
-		print self.__w,self.__b
-		#pass
+		#print self.__w,self.__b
+
 	def test(self):
 		print 'test'
 
